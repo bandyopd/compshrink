@@ -10,4 +10,44 @@ We propose a variable selection and estimation framework for Bayesian compositio
 ```{r}
 stan.hs.fit <- stan_model(file = 'multinomial-horseshoe-marg.stan', 
                           model_name = "Dirichlet Horseshoe")
+stan.hsplus.fit <- stan_model(file = 'multinomial-hsplus-marg.stan', 
+                              model_name = "Dirichlet HS+")
+stan.laplace.fit <- stan_model(file = 'multinomial-laplace-marg.stan', 
+                               model_name = "Dirichlet Laplace")
 ```
+
+For any of the three candidate priors, we can sample from the posterior using the `sampling` function in R-Stan. 
+
+```{r}
+n.iters = 1000
+n.chains = 1
+rng.seed = 12345
+
+set.seed(rng.seed)
+dirfit <- dirmult(Ymat)
+
+NYC.data = list(N = nrow(Ymat), ncolY = ncol(Ymat), ncolX = ncol(Xmat),
+                 X = Xmat, Y = Ymat, psi = dirfit$theta, scale_icept = 2, d=1) 
+
+ptm = proc.time()
+smpls.hs.res = sampling(stan.hs.fit, 
+                        data = NYC.data, 
+                        iter = n.iters,
+                        init = 0,
+                        seed = rng.seed,
+                        cores = 2,
+                        warmup = floor(n.iters/2),
+                        chains = n.chains,
+                        control = list(adapt_delta = 0.85),
+                        refresh = 100)
+proc.time()-ptm
+# summarize results
+
+beta.smpls.hs <- rstan::extract(smpls.hs.res, pars=c("beta"), permuted=TRUE)[[1]]
+beta.mean.hs <- apply(beta.smpls.hs, c(2,3), mean)
+beta.median.hs <- apply(beta.smpls.hs, c(2,3), median)
+beta.mode.hs <- apply(beta.smpls.hs, c(2,3), Mode)
+beta.sd.hs <- apply(beta.smpls.hs, c(2,3),sd)
+beta.hs.ci <- apply(beta.smpls.hs, c(2,3), quantile, probs=c(0.025,0.5,0.975)) #the median line with 95% credible intervals
+```
+
