@@ -1,6 +1,6 @@
 # compshrink
 
-This is the repository for Bayesian Dirichlet-Multinomial regression using global-local shrinkage priors: including horseshoe, horseshoe+ and Bayesian Lasso as described in the paper entitled "Shrinkage and Selection for Compositional Data" by Jyotishka Datta and Dipankar Bandopadhyay. 
+This is the repository for implementing a Bayesian Dirichlet-Multinomial regression using global-local shrinkage priors, which includes the horseshoe, horseshoe+ and Bayesian Lasso, as described in the paper: Datta J and Bandyopadhyay D. (2024). Bayesian variable shrinkage and selection in compositional data regression: Application to oral microbiome, *Journal of the Indian Society for Probability and Statistics*, 25, 491-515
 
 ## Abstract
 
