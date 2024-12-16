@@ -6,6 +6,11 @@ This is the repository for implementing a Bayesian Dirichlet-Multinomial regress
 
 We propose a variable selection and estimation framework for Bayesian compositional regression model using state-of-the-art continuous shrinkage priors to identify the significant associations between available covariates and taxonomic abundance from microbiome data. We use a generalized Dirichlet and Dirichlet distribution for modeling the compositional component and compare the popular horseshoe (Carvalho et al., 2010) and horseshoe+ (Bhadra et al., 2017) priors along with the Bayesian Lasso as a benchmark. We use Hamiltonial Monte Carlo for posterior sampling and posterior credible intervals and pseudo posterior inclusion probabilities for variable selection. Our simulation studies show excellent recovery and estimation accuracy for sparse parameter regime, and we apply our method to human microbiome data from NYC-Hanes study.
 
+## References
+
+1. Carvalho CM, Polson NG, Scott JG (2010). The horseshoe estimator for sparse signals, *Biometrika*, 97(2), 465–480
+2. Bhadra A, Datta J, Polson NG, Willard B. (2017). The Horseshoe+ Estimator of Ultra-Sparse Signals, *Bayesian Analysis*, 12(4), 1105-1131
+
 ## Details 
 
 The `Stan` codes are provided in the `stan-codes` folder. 
